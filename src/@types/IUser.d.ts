@@ -1,10 +1,8 @@
 declare module '@edu'{
   export interface IUser{
     address:string
-    age:number
-    educationLevel:string
+    username:string
+    password?:string
     email:string
-    qq:string
-    sexual:string
   }
 }

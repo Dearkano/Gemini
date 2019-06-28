@@ -17,12 +17,13 @@ import userModel from '@/models/state'
 
 import { loginHandler } from '@/services/utils/errorHandler'
 
-import snowball from '@/assets/snowball.png'
+import img from '@/assets/login.png'
 
 const WrapperDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 500px;
 `
 
 const SnowballImg = styled.img`
@@ -35,8 +36,11 @@ const FormDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 200px;
-  height: 105px;
+  width: 350px;
+  height: 130px;
+`
+const Div = styled.div`
+  display: flex;
 `
 
 const LogInButton = muiStyled(Button).attrs({
@@ -44,6 +48,15 @@ const LogInButton = muiStyled(Button).attrs({
   color: 'primary',
 })({
   marginTop: 35,
+  width: 150
+})
+
+const RegisterButton = muiStyled(Button).attrs({
+  variant: 'contained',
+  color: 'secondary',
+})({
+  marginTop: 35,
+  width: 150
 })
 
 const ButtonProgress = muiStyled(CircularProgress).attrs({
@@ -107,33 +120,44 @@ const LogIn: React.FC = () => {
       })
   }
 
+  const register = () => navigate('/register')
+
   const { logInFail, loading } = logInState
 
   return (
     <WrapperDiv>
+       <Typography variant="h4">登录</Typography>
+      <Div>
+        <img style={{ width: '500px' }} src={img} />
+        <WrapperDiv>
 
-      <Typography variant="h6">登录</Typography>
+          <FormDiv>
+            <FormControl fullWidth style={{ marginTop: '60px' }}>
+              <InputLabel htmlFor="username">用户名</InputLabel>
+              <Input id="username" value={formField.username} onChange={handleChange('username')} />
+            </FormControl>
+            <FormControl fullWidth style={{ marginTop: '30px' }}>
+              <InputLabel htmlFor="password">密码</InputLabel>
+              <Input
+                id="password"
+                type="password"
+                value={formField.password}
+                onChange={handleChange('password')}
+              />
+            </FormControl>
 
-      <FormDiv>
-        <FormControl fullWidth>
-          <InputLabel htmlFor="username">用户名</InputLabel>
-          <Input id="username" value={formField.username} onChange={handleChange('username')} />
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel htmlFor="password">密码</InputLabel>
-          <Input
-            id="password"
-            type="password"
-            value={formField.password}
-            onChange={handleChange('password')}
-          />
-        </FormControl>
-      </FormDiv>
-
-      <LogInButton disabled={loading} onClick={logIn}>
-        {logInFail ? '重试' : '登录'}
-        {loading && <ButtonProgress />}
-      </LogInButton>
+          <Div style={{ justifyContent: 'space-between', width: '350px' }}>
+            <LogInButton disabled={loading} onClick={logIn}>
+              {logInFail ? '重试' : '登录'}
+              {loading && <ButtonProgress />}
+            </LogInButton>
+            <RegisterButton onClick={register}>
+              注册
+      </RegisterButton>
+          </Div>
+          </FormDiv>
+        </WrapperDiv>
+      </Div>
     </WrapperDiv>
   )
 }

@@ -44,7 +44,7 @@ export default () => {
       aria-controls={menuId}
       onClick={handleProfileMenuOpen}
     >
-      <AccountCircle /> {myInfo.email}
+      <AccountCircle /> {myInfo.username}
     </IconButton> : <Link style={{textDecoration: 'none'}} to={'/login'}>登录</Link>}
       {renderMenu}
   </>

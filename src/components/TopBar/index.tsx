@@ -162,7 +162,7 @@ class PrimarySearchAppBar extends React.Component<Props, State> {
               <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              数字教育资源平台
+              Gemini |专注旧书交易
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>

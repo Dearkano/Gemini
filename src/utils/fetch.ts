@@ -82,7 +82,7 @@ export async function GET<T>(url: string, options: GETOptions = {}) {
 
   const requestInit: RequestInit = {
     headers,
-    // credentials: "include",
+    credentials: "include",
     ...options.requestInit,
   }
 
@@ -127,6 +127,7 @@ export async function POST<T = void>(url: string, options: POSTOptions = {}) {
   const requestInit: RequestInit = {
     method: 'POST',
     headers,
+    credentials: "include",
     body: options.params && JSON.stringify(options.params),
     ...options.requestInit,
   }
@@ -154,6 +155,7 @@ export async function PUT<T = void>(url: string, options: PUTOptions = {}) {
     method: 'PUT',
     headers,
     body: options.params && JSON.stringify(options.params),
+    credentials: "include",
     ...options.requestInit,
   }
 
@@ -180,6 +182,7 @@ export async function DELETE<T = void>(url: string, options: DELETEOptions = {})
     method: 'DELETE',
     headers,
     body: options.params && JSON.stringify(options.params),
+    credentials: "include",
     ...options.requestInit,
   }
 

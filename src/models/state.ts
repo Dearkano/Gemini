@@ -55,7 +55,6 @@ class UserModel extends Model<State> {
     }
 
     const myInfo = await getMyInfo()
-    console.log(myInfo)
   }
 }
 
