@@ -6,9 +6,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Typography } from '@material-ui/core';
 
 export default () => {
   const  {isLogIn, myInfo} = useModel(stateModel, ['isLogIn','myInfo'])
+  console.log(myInfo)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   function handleMenuClose() {
@@ -44,7 +46,8 @@ export default () => {
       aria-controls={menuId}
       onClick={handleProfileMenuOpen}
     >
-      <AccountCircle /> {myInfo.username}
+      <AccountCircle  style={{marginRight:"10px"}}/>
+      <Typography variant="body1">{myInfo.username}</Typography>
     </IconButton> : <Link style={{textDecoration: 'none'}} to={'/login'}>登录</Link>}
       {renderMenu}
   </>

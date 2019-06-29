@@ -8,6 +8,8 @@ import Resource from '@/pages/Resource'
 import MyResource from '@/pages/MyResource'
 import Register from '@/pages/Register'
 import Issue from '@/pages/Issue'
+import Message from '@/pages/Message/List'
+import MessageDetail from '@/pages/Message/Detail'
 
 export const Route: React.FC<
   RouteComponentProps & {
@@ -33,6 +35,8 @@ const MyRouter: React.FC<ILocation> = ({ location }) => (
     <Route path='/myResource' component={MyResource} />
     <Route path='/register' component={Register} />
     <Route path='/issue' component={Issue} />
+    <Route path='/message' component={Message} />
+    <Route path="/messageDetail/:id" component={MessageDetail} />
   </Router>
 )
 

@@ -124,22 +124,8 @@ class PrimarySearchAppBar extends React.Component<Props, State> {
   render() {
     const { anchorEl, profileAnchorEl } = this.state;
     const { classes } = this.props;
-    const isMenuOpen = Boolean(anchorEl);
     const isProfileMenuOpen = Boolean(profileAnchorEl);
 
-    const renderMenu = (
-      <Menu
-        className={classes.menu}
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={() => { navigate('/resource'); this.handleMenuClose();} }>资源中心</MenuItem>
-        <MenuItem onClick={() => { navigate('/myResource'); this.handleMenuClose(); }}>我的资源</MenuItem>
-      </Menu>
-    );
 
     const renderProfileMenu = (
       <Menu
@@ -156,7 +142,7 @@ class PrimarySearchAppBar extends React.Component<Props, State> {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton onClick={this.handleMenuOpen} className={classes.menuButton} color="inherit" aria-label="Open drawer">
               <MenuIcon />
@@ -181,8 +167,7 @@ class PrimarySearchAppBar extends React.Component<Props, State> {
              <User />
             </div>
           </Toolbar>
-        </AppBar>
-        {renderMenu}
+        </AppBar>}
         {renderProfileMenu}
       </div>
     );

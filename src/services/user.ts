@@ -5,3 +5,7 @@ import host from '@/config/host'
 export async function getMyInfo() {
   return GET('me')
 }
+
+export async function getUserById(id:string) {
+  return GET(`getUserById?id=${id}`)
+}

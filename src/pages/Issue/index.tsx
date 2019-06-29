@@ -78,6 +78,14 @@ interface FormField {
   imgUrl: string
 }
 
+interface ErrorField {
+  name: string
+  origin_price: string
+  price: string
+  introduction: string
+  url: string
+}
+
 interface SubmitState {
   submitFail: boolean
   loading: boolean
@@ -118,14 +126,12 @@ export default () => {
     url: '',
     imgUrl: ''
   })
-  const [errMessage, setErrMessage] = useState<FormField>({
+  const [errMessage, setErrMessage] = useState<ErrorField>({
     name: '',
-    class: 1,
-    origin_price: 0,
-    price: 0,
+    origin_price: '',
+    price: '',
     introduction: '',
     url: '',
-    imgUrl: ''
   })
   const [submitState, setSubmitState] = useState<SubmitState>({
     loading: false,

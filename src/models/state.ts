@@ -54,7 +54,8 @@ class UserModel extends Model<State> {
       return
     }
 
-    const myInfo = await getMyInfo()
+    const res = await getMyInfo()
+    res.map((data:IUser)=>this.setState({myInfo:data}))
   }
 }
 
