@@ -7,6 +7,7 @@ import Login from '@/pages/Login'
 import Resource from '@/pages/Resource'
 import MyResource from '@/pages/MyResource'
 import Register from '@/pages/Register'
+import Issue from '@/pages/Issue'
 
 export const Route: React.FC<
   RouteComponentProps & {
@@ -31,6 +32,7 @@ const MyRouter: React.FC<ILocation> = ({ location }) => (
     <Route path='/resource' component={Resource} />
     <Route path='/myResource' component={MyResource} />
     <Route path='/register' component={Register} />
+    <Route path='/issue' component={Issue} />
   </Router>
 )
 
