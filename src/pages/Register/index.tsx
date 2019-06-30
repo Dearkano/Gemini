@@ -89,7 +89,8 @@ const Register: React.FC = () => {
   const handleRegister = async () => {
     let params = Object.assign({}, formField)
     delete params.confirmPassword
-    await register(params)
+    const res= await register(params)
+    res.map(d=>navigate('/'))
   }
   const handleCheck = (field: string) => {
     if (field === 'username') {

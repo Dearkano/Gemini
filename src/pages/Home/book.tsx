@@ -11,6 +11,14 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { IBook } from '@gemini'
 import { getUserByBookName } from '@/services/user'
+import { buy } from '@/services/book'
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import finishIcon from '@/assets/finish.png'
 
 const useStyles = makeStyles((theme: any) =>
   createStyles({
@@ -56,6 +64,7 @@ interface Props {
 const ImgMediaCard: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { data } = props
+  const [qrcode, setQrCode] = useState<string|null>(null)
   const [seller, setSeller] = useState(null)
 
   useEffect(() => {
@@ -73,8 +82,51 @@ const ImgMediaCard: React.FC<Props> = (props) => {
       navigate(`/messageDetail/${seller.id}`)
     }
   }
+  const [finish, setFinish] = useState(false)
 
+  const serialize = function(obj:any) {
+    var str = [];
+    for (var p in obj)
+     if (obj.hasOwnProperty(p)) {
+      str.push(p + "=" + obj[p]);
+     }
+    return str.join("&");
+   }
+  const buyBook = async () => {
+    handleClickOpen()
+    const res = await buy(data.name, data.price)
+    res.map(async (r: any) => {
+      console.log(r)
+      const url = `https://data.020zf.com/index.php?s=/api/pp/index_show.html`
+      //const url = 'https://pay.020zf.com'
+      const headers = new Headers()
+      headers.append('Content-Type', 'application/x-www-form-urlencoded')
+      headers.append('Accept', 'application/json')
+      const res = await fetch(url, {method:'post',headers ,body:serialize(r)})
+      const data = await res.json()
+      if(data.data.qrcode){
+        const qr = `https://data.020zf.com/api.php/pp/scerweima2?url=${data.data.qrcode}`
+        console.log(qr)
+        setQrCode(qr)
+        setTimeout(() => {
+          setFinish(true)
+        }, 3000);
+      }
+      //window.location.href = url
+    })
+  }
+
+  const [open, setOpen] = useState(false);
+
+  function handleClickOpen() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
+  }
   return (
+    <>
     <Card className={classes.card}>
       <Column>
         <CardActionArea>
@@ -96,7 +148,7 @@ const ImgMediaCard: React.FC<Props> = (props) => {
             <OriPrice>原价: ￥{data.origin_price}</OriPrice>
             <Price>￥{data.price}</Price>
           </Column>
-          <Button size="small" variant="contained" color="secondary">
+          <Button onClick={buyBook} size="small" variant="contained" color="secondary">
             购买
         </Button>
           <Button onClick={dial} size="small" variant="contained" color="primary">
@@ -116,6 +168,16 @@ const ImgMediaCard: React.FC<Props> = (props) => {
         title="Contemplative Reptile"
       />
     </Card>
+    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        {!finish&&<DialogTitle id="form-dialog-title">支付 ￥{data.price}</DialogTitle>}
+        <DialogContent>
+          {finish? <Column style={{width:'300px',height:'300px'}}>
+          <img width="100px" src={finishIcon}/>
+          <Typography style={{marginTop:'20px'}} variant="h5">支付成功</Typography>
+          </Column>: qrcode && <img width="300px" src={qrcode} />}
+    </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

@@ -11,9 +11,13 @@ import DetailItem from './components/DetailItem'
 import Editor from './Editor'
 import { getMessageContent, sendMessage } from '@/services/message'
 import {getUserById} from '@/services/user'
-const Div = styled.div`
+const Root = styled.div`
   display: flex;
   width: 100%;
+  justify-content:center;
+`
+const Div = styled.div`
+  display: flex;
   justify-content:center;
   opacity: 0.54;
 `
@@ -72,7 +76,7 @@ const MessageList = ({ id, refresh }: Props & { refresh: () => void }) => {
   }
 
   return (
-    <>
+    <Root>
     <Div>{user && <Typography variant="h5">与{user.username}的对话</Typography>}</Div>
       <ListS>
         <InfiniteList
@@ -91,6 +95,6 @@ const MessageList = ({ id, refresh }: Props & { refresh: () => void }) => {
       <FixBottomDiv>
         <Editor callback={sendMsg} />
       </FixBottomDiv>
-    </>
+    </Root>
   )
 }

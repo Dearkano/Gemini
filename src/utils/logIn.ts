@@ -1,6 +1,7 @@
 import { Try, Success, Failure } from './fp/Try'
 import { FetchError, encodeParams, GET, POST } from './fetch'
 import { getLocalStorage, setLocalStorage, removeLocalStorage } from './storage'
+import { navigate } from './history';
 
 export async function getAccessToken(){
   return getLocalStorage('access_token')
@@ -14,6 +15,7 @@ export async function logIn(username:string, password:string){
 export async function logOut(){
   const data = await GET('logout')
   removeLocalStorage('access_token')
+  navigate('/')
   return data
 }
 export function isLogIn() {

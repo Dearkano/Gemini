@@ -17,3 +17,8 @@ export async function getBooksByClass(type:string, page:number){
 export async function getBookByName(name: string){
   return await GET<IBook>(`getBookByName?name=${name}`)
 }
+
+export async function buy(bookName:string, price:number){
+  return await POST('buy', {params:{bookName,price}})
+}
+

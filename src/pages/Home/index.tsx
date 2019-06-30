@@ -4,7 +4,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import styled from 'styled-components'
 import { IBook } from '@gemini'
-import { getAllBooks, getBooksByClass,getBookByName } from '@/services/book'
+import { getAllBooks, getBooksByClass, getBookByName } from '@/services/book'
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button'
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: any) => createStyles({
     transition: theme.transitions.create('width'),
     width: '500px',
     [theme.breakpoints.down('md')]: {
-      width: 200,
+      width: 100,
     },
   },
   formControl: {
@@ -84,7 +84,7 @@ export default () => {
   const [tip, setTip] = useState('')
   // const [allBooks] = useFetcher(getAllBooks)
   // if(allBooks) setBooks(allBooks)
-  async function getBooks(){
+  async function getBooks() {
     const res = await getAllBooks()
     res.map(data => setBooks(data))
   }
@@ -95,16 +95,20 @@ export default () => {
   const [type, setType] = useState("0")
   const handleChange = async (event: React.ChangeEvent<unknown>) => {
     setType((event.target as HTMLInputElement).value);
-    const res = await getBooksByClass((event.target as HTMLInputElement).value, page)
-    res.map(data => setBooks(data))
+    if ((event.target as HTMLInputElement).value === '0') {
+      getBooks()
+    } else {
+      const res = await getBooksByClass((event.target as HTMLInputElement).value, page)
+      res.map(data => setBooks(data))
+    }
   }
-  const handleSearchChange = (e:any) => setSearchValue(e.target.value)
-  const search = async() => {
+  const handleSearchChange = (e: any) => setSearchValue(e.target.value)
+  const search = async () => {
     const data = await getBookByName(searchValue)
-    data.map(d=>{
-      if(d&&JSON.stringify(d)!=='{}'){
+    data.map(d => {
+      if (d && JSON.stringify(d) !== '{}') {
         setBooks([d])
-      }else{
+      } else {
         setBooks([])
         setTip('没有找到您搜索的结果')
       }
@@ -112,21 +116,21 @@ export default () => {
   }
   return <Root>
     <Row>
-    <div className={classes.search}>
-      <div className={classes.searchIcon}>
-        <SearchIcon onClick={search} color="primary" />
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon onClick={search} color="primary" />
+        </div>
+        <InputBase
+          value={searchValue}
+          onChange={handleSearchChange}
+          placeholder="搜索"
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+        />
       </div>
-      <InputBase
-      value={searchValue}
-      onChange={handleSearchChange}
-        placeholder="搜索"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-      />
-    </div>
-    <Button variant="contained" color="primary" onClick={search}>搜索</Button></Row>
+      <Button variant="contained" color="primary" onClick={search}>搜索</Button></Row>
     <FormControl className={classes.formControl}>
       <RadioGroup
         row
@@ -136,6 +140,7 @@ export default () => {
         value={type}
         onChange={handleChange}
       >
+        <FormControlLabel value="0" control={<Radio />} label="全部" />
         <FormControlLabel value="1" control={<Radio />} label="网络文学" />
         <FormControlLabel value="2" control={<Radio />} label="教育" />
         <FormControlLabel value="3" control={<Radio />} label="小说" />
