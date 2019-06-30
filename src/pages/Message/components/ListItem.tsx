@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { navigate } from '@/utils/history'
-import {IRecentMessage} from '@gemini'
+import { IRecentMessage } from '@gemini'
 import dayjs from 'dayjs'
-
+import AccountCircle from '@material-ui/icons/AccountCircle'
 import {
   Avatar,
   ListItem,
@@ -32,6 +32,9 @@ export default ({ message }: Props) => {
 
   return (
     <ListItem button onClick={() => navigateToDetail(message.userId)}>
+      <ListItemAvatar>
+        <AccountCircle />
+      </ListItemAvatar>
       <ListItemText primary={message.username} secondary={<Text>{message.lastContent}</Text>} />
       <ListItemSecondaryAction>
         <ListItemText secondary={dayjs(message.time).fromNow()} />

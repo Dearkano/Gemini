@@ -4,12 +4,11 @@ import { Router, RouteComponentProps, WindowLocation } from '@reach/router'
 
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
-import Resource from '@/pages/Resource'
-import MyResource from '@/pages/MyResource'
 import Register from '@/pages/Register'
 import Issue from '@/pages/Issue'
 import Message from '@/pages/Message/List'
 import MessageDetail from '@/pages/Message/Detail'
+import Buy from '@/pages/Buy'
 
 export const Route: React.FC<
   RouteComponentProps & {
@@ -31,12 +30,11 @@ const MyRouter: React.FC<ILocation> = ({ location }) => (
   <Router location={location}>
     <Route path="/" component={Home} />
     <Route path="/login" component={Login} />
-    <Route path='/resource' component={Resource} />
-    <Route path='/myResource' component={MyResource} />
     <Route path='/register' component={Register} />
     <Route path='/issue' component={Issue} />
     <Route path='/message' component={Message} />
     <Route path="/messageDetail/:id" component={MessageDetail} />
+    <Route path="/buy" component={Buy} />
   </Router>
 )
 

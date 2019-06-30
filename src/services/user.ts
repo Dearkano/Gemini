@@ -9,3 +9,11 @@ export async function getMyInfo() {
 export async function getUserById(id:string) {
   return GET(`getUserById?id=${id}`)
 }
+
+export async function getUserByName(username:string){
+  return GET(`getUserByName?username=${encodeURIComponent(username)}`)
+}
+
+export async function getUserByBookName(bookName:string){
+  return GET(`getUserByBookName?name=${encodeURIComponent(bookName)}`)
+}

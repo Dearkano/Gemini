@@ -15,7 +15,7 @@ import { getUserByBookName } from '@/services/user'
 const useStyles = makeStyles((theme: any) =>
   createStyles({
     card: {
-      width: 500,
+      width: 300,
       display: 'flex',
       [theme.breakpoints.down('md')]: {
         width: 300,
@@ -50,28 +50,16 @@ const Price = styled.div`
 `
 
 interface Props {
-  data: IBook
+  data: any
 }
 
 const ImgMediaCard: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { data } = props
-  const [seller, setSeller] = useState(null)
 
-  useEffect(() => {
-    getSeller()
-  }, [])
-  async function getSeller() {
-    const res = await getUserByBookName(data.name)
-    res.map((user: any) => {
-      setSeller(user)
-    })
-  }
+  const dial = () => {
+    navigate(`/messageDetail/${data.userId}`)
 
-  const dial = async () => {
-    if (seller !== null) {
-      navigate(`/messageDetail/${seller.id}`)
-    }
   }
 
   return (
@@ -80,12 +68,8 @@ const ImgMediaCard: React.FC<Props> = (props) => {
         <CardActionArea>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {data.name}
+              {data.bookName}
             </Typography>
-            <a href={data.url}>
-              <Typography gutterBottom variant="body2" component="p">
-                {data.url}
-              </Typography></a>
             <Typography variant="body2" color="textSecondary" component="p">
               {data.introduction}
             </Typography>
@@ -93,28 +77,17 @@ const ImgMediaCard: React.FC<Props> = (props) => {
         </CardActionArea>
         <CardActions className={classes.actions}>
           <Column style={{ width: 'auto', marginLeft: '10px' }}>
-            <OriPrice>原价: ￥{data.origin_price}</OriPrice>
             <Price>￥{data.price}</Price>
           </Column>
-          <Button size="small" variant="contained" color="secondary">
-            购买
-        </Button>
           <Button onClick={dial} size="small" variant="contained" color="primary">
-            联系卖家
+            联系买家
         </Button>
           <Column style={{ width: 'auto', marginLeft: '10px' }}>
-            <Typography style={{ fontSize: '12px' }} variant="body2">卖家</Typography>
-            {seller && <Typography style={{ color: 'rgb(66,165,245)' }} variant="body2">{seller.username}</Typography>}
+            <Typography style={{ fontSize: '12px' }} variant="body2">买家</Typography>
+            <Typography style={{ color: 'rgb(66,165,245)' }} variant="body2">{data.username}</Typography>
           </Column>
         </CardActions>
       </Column>
-      <CardMedia
-        className={classes.cardMedia}
-        component="img"
-        alt="Contemplative Reptile"
-        image={data.img_url}
-        title="Contemplative Reptile"
-      />
     </Card>
   );
 }
